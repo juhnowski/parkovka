@@ -32,23 +32,21 @@ public class ParkovkaApplication implements CommandLineRunner {
 
 	@Override
     public void run(String... args) {
-        // System.out.println("Init Aerospike");
-		// AerospikeClient client = new AerospikeClient(HOST, PORT);
-		// System.out.println("Клиент инициализирован и подключен к кластеру.");
+
 
 		// putBrands();
 		// getBrands("all");
 		// putModels();
-		//getBrands("BMW");
-		//	getBrands("Infiniti");
-		//getModels(String brand);
-		//income();
-		//outcome();
-		//report();
-		//pay();
-		//payments();
-		//putBalance(100.00);
-		//getBalance();
+		// getBrands("BMW");
+		// getBrands("Infiniti");
+
+		// income();
+		// outcome();
+		// report();
+		// pay();
+		// payments();
+		// putBalance(100.00);
+		// getBalance();
 		// setRoles();
 		// getRoles();
 		// setRole();
@@ -61,11 +59,14 @@ public class ParkovkaApplication implements CommandLineRunner {
 		// getType();
 		// setLogo();
 		// getLogo();
-		//	setCar();
-		//	getCar();
-		//putBarriers();
-		//getBarriers();
-		getBarrier(1);
+		// setCar();
+		// getCar();
+		// putBarriers();
+		// getBarriers();
+		// getBarrier(1);
+		setColors();
+		getColors();
+
 		close();
     }
 
@@ -319,26 +320,24 @@ public class ParkovkaApplication implements CommandLineRunner {
 		});
 	}
 
-// 	Key key = new Key("frm", "barrier", "1");
-// Bin name = new Bin("name", "Въезд 1");
-// Bin video = new Bin("name", "https://frm.com/video1_in.msrp");
-// client.put(null, key, name, video);
-// ------------------------------------------------
-// Key key = new Key("frm", "barrier", "2");
-// Bin name = new Bin("name", "Въезд 2");
-// Bin video = new Bin("name", "https://frm.com/video2_in.msrp");
-// client.put(null, key, name, video);
-// ----------------------------------------------------------
-// Key key = new Key("frm", "barrier", "3");
-// Bin name = new Bin("name", "Выезд 1");
-// Bin video = new Bin("name", "https://frm.com/video1_out.msrp");
-// client.put(null, key, name, video);
-// ------------------------------------------------
-// Key key = new Key("frm", "barrier", "4");
-// Bin name = new Bin("name", "Выезд 2");
-// Bin video = new Bin("name", "https://frm.com/video2_out.msrp");
-// client.put(null, key, name, video);
-// ----------------------------------------------------------
+	public static void setColors(){
+		List<String> models = new ArrayList<String>();
+		models.addAll(Colors.list);
+		Key modelsKey = new Key("frm", "colors", "all");
+		System.out.println("putModels:theKey="+modelsKey);
+		Bin modelsBin = new Bin("list", models);
+		System.out.println( "Created " + modelsBin + ".");
+		ClientPolicy clientPolicy = new ClientPolicy();
+		System.out.println("Created a client policy.");
+		client.put(clientPolicy.writePolicyDefault, modelsKey, modelsBin);
+		System.out.println( "Posted " + modelsBin + ".");
+	}
+
+	public static void getColors(){
+		Key key = new Key("frm", "colors", "all");
+		Record record = client.get(null, key);
+		System.out.println(record);
+	}
 
 
 
